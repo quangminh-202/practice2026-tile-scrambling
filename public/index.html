@@ -36,7 +36,7 @@
 </head>
 <body>
   <div class="info">
-    Open DevTools / F12 → Network → xem request /tiles/z/fakeX/fakeY.png
+    Open DevTools / F12 → Network → see request /tiles/z/fakeX/fakeY.png
   </div>
 
   <div id="map"></div>
@@ -51,33 +51,34 @@
     } else {
       console.log("Leaflet loaded successfully!");
       
+      // Scrambling constants (must match server-side)
       const OFFSET_X = 1000;
       const OFFSET_Y = 2000;
 
-      // Tạo bản đồ
+      // Create map centered on Helsinki
       const map = L.map("map").setView([60.1699, 24.9384], 12);
       console.log("Map created!");
 
-      // Tạo tile layer tùy chỉnh
+      // Create custom tile layer with coordinate scrambling
       const ScrambledTileLayer = L.TileLayer.extend({
         getTileUrl: function (coords) {
           const z = coords.z;
           const realX = coords.x;
           const realY = coords.y;
 
-          // Client scramble tọa độ
+          // Scramble coordinates before sending to server
           const fakeX = realX + OFFSET_X;
           const fakeY = realY + OFFSET_Y;
 
           console.log("Client real:", { z, realX, realY });
           console.log("Client fake:", { z, fakeX, fakeY });
 
-          // Client chỉ gửi tọa độ giả lên server
+          // Send only fake coordinates to server
           return `/tiles/${z}/${fakeX}/${fakeY}.png`;
         }
       });
 
-      // Thêm layer vào map
+      // Add tile layer to map
       const scrambledLayer = new ScrambledTileLayer("", {
         attribution: '&copy; OpenStreetMap contributors',
         maxZoom: 19

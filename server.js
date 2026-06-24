@@ -5,31 +5,31 @@ const axios = require("axios");
 const app = express();
 const PORT = 3000;
 
-// Đây là "key" scramble đơn giản
+// Simple scrambling constants
 const OFFSET_X = 1000;
 const OFFSET_Y = 2000;
 
-// Cho Express phục vụ file frontend trong thư mục public
+// Serve static files from public directory
 app.use(express.static(path.join(__dirname, "public")));
 
-// Endpoint nhận tile đã bị scramble
+// Endpoint to receive scrambled tile coordinates
 app.get("/tiles/:z/:fakeX/:fakeY.png", async (req, res) => {
   try {
     const z = Number(req.params.z);
     const fakeX = Number(req.params.fakeX);
     const fakeY = Number(req.params.fakeY);
 
-    // Server giải scramble để lấy tọa độ thật
+    // Unscramble coordinates to get real tile position
     const realX = fakeX - OFFSET_X;
     const realY = fakeY - OFFSET_Y;
 
     console.log("Fake:", { z, fakeX, fakeY });
     console.log("Real:", { z, realX, realY });
 
-    // URL tile thật từ OpenStreetMap
+    // Real tile URL from OpenStreetMap
     const realTileUrl = `https://tile.openstreetmap.org/${z}/${realX}/${realY}.png`;
 
-    // Server tự đi lấy tile thật
+    // Fetch the real tile from OpenStreetMap
     const response = await axios.get(realTileUrl, {
       responseType: 'arraybuffer',
       headers: {
