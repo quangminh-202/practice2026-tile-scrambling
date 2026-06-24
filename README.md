@@ -27,10 +27,23 @@ realY = fakeY - OFFSET_Y;  // Reverse transform Y
 
 ```
 .
-├── server.js           # Express server with unscrambling logic
-├── package.json        # Project dependencies
+├── config/
+│   └── constants.js        # Configuration constants
+├── routes/
+│   └── tiles.js           # Tile endpoint routes
+├── utils/
+│   └── scrambler.js       # Scrambling/unscrambling logic
 ├── public/
-│   └── index.html      # Client with Leaflet map
+│   ├── css/
+│   │   └── styles.css     # Application styles
+│   ├── js/
+│   │   ├── config.js      # Client-side configuration
+│   │   ├── scrambled-tile-layer.js  # Custom Leaflet layer
+│   │   └── map.js         # Map initialization
+│   └── index.html         # Main HTML page
+├── server.js              # Express server entry point
+├── package.json           # Project dependencies
+├── .gitignore            # Git ignore rules
 └── README.md
 ```
 

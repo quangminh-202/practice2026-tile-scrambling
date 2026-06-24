@@ -1,92 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Tile Scrambling Practica</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tile Scrambling Project</title>
 
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
+        crossorigin="" />
 
-  <style>
-    html, body {
-      margin: 0;
-      height: 100%;
-    }
-
-    #map {
-      width: 100%;
-      height: 100vh;
-    }
-
-    .info {
-      position: absolute;
-      top: 10px;
-      left: 50px;
-      z-index: 1000;
-      background: white;
-      padding: 10px;
-      border-radius: 6px;
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-  </style>
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <div class="info">
-    Open DevTools / F12 → Network → see request /tiles/z/fakeX/fakeY.png
+  <!-- Info banner -->
+  <div class="info-banner">
+    <strong>Tile Scrambling Demo</strong><br>
+    Open DevTools (F12) → Network tab to see scrambled coordinates
   </div>
 
+  <!-- Map container -->
   <div id="map"></div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script>
-    console.log("Script started!");
-    
-    if (typeof L === 'undefined') {
-      console.error("Leaflet not loaded!");
-      document.getElementById('map').innerHTML = '<h1 style="color:red;padding:20px;">Leaflet library failed to load!</h1>';
-    } else {
-      console.log("Leaflet loaded successfully!");
-      
-      // Scrambling constants (must match server-side)
-      const OFFSET_X = 1000;
-      const OFFSET_Y = 2000;
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+          crossorigin=""></script>
 
-      // Create map centered on Helsinki
-      const map = L.map("map").setView([60.1699, 24.9384], 12);
-      console.log("Map created!");
-
-      // Create custom tile layer with coordinate scrambling
-      const ScrambledTileLayer = L.TileLayer.extend({
-        getTileUrl: function (coords) {
-          const z = coords.z;
-          const realX = coords.x;
-          const realY = coords.y;
-
-          // Scramble coordinates before sending to server
-          const fakeX = realX + OFFSET_X;
-          const fakeY = realY + OFFSET_Y;
-
-          console.log("Client real:", { z, realX, realY });
-          console.log("Client fake:", { z, fakeX, fakeY });
-
-          // Send only fake coordinates to server
-          return `/tiles/${z}/${fakeX}/${fakeY}.png`;
-        }
-      });
-
-      // Add tile layer to map
-      const scrambledLayer = new ScrambledTileLayer("", {
-        attribution: '&copy; OpenStreetMap contributors',
-        maxZoom: 19
-      });
-
-      scrambledLayer.addTo(map);
-      console.log("Tile layer added!");
-    }
-  </script>
+  <!-- Application scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/scrambled-tile-layer.js"></script>
+  <script src="js/map.js"></script>
 </body>
 </html>
