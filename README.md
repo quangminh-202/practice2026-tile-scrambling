@@ -81,20 +81,21 @@ http://localhost:3000
 
 ### Request Example:
 When you view the map at a certain location, the Network tab shows requests like:
-- **URL in browser**: `/tiles/14/10326/6742.png` (scrambled coordinates)
-- **Real coordinate**: `(9326, 4742)` (actual tile on OpenStreetMap)
-- **Offset applied**: `+1000` for X, `+2000` for Y
 
-This means an observer can only see the scrambled coordinates in the network requests, not the original tile positions.
-
-### Network Tab Screenshot Example:
 ```
 Request URL: http://localhost:3000/tiles/14/10326/6742.png
+Method: GET
 Status: 200 OK
 Type: png
 ```
 
-The scrambled coordinates (10326, 6742) hide the real tile location (9326, 4742).
+Breaking down the coordinates:
+- **Scrambled X**: 10326 (visible in Network tab)
+- **Scrambled Y**: 6742 (visible in Network tab)
+- **Real X**: 9326 (original tile coordinate: 10326 - 1000)
+- **Real Y**: 4742 (original tile coordinate: 6742 - 2000)
+
+An observer monitoring network traffic will only see the scrambled coordinates (10326, 6742), not the real tile location (9326, 4742).
 
 ## Limitations
 
