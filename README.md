@@ -96,14 +96,3 @@ Breaking down the coordinates:
 - **Real Y**: 4742 (original tile coordinate: 6742 - 2000)
 
 An observer monitoring network traffic will only see the scrambled coordinates (10326, 6742), not the real tile location (9326, 4742).
-
-## Limitations
-
-- Client-side offsets are visible in JavaScript source code
-- A user with developer knowledge can inspect the code to find OFFSET_X and OFFSET_Y
-- This is a demonstration of the concept, not a production-ready security solution
-- For real protection, server-side session-based scrambling or encryption would be needed
-
-## Author
-
-Practical work on tile map protection
