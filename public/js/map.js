@@ -15,8 +15,7 @@ function initMap() {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     maxZoom: CONFIG.MAX_ZOOM,
     offsetX: CONFIG.OFFSET_X,
-    offsetY: CONFIG.OFFSET_Y,
-    debug: true
+    offsetY: CONFIG.OFFSET_Y
   });
 
   scrambledLayer.addTo(map);

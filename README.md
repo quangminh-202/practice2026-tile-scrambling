@@ -1,10 +1,12 @@
 # Tile Scrambling Project
 
-A tile map protection system using coordinate scrambling technique.
+A simple demonstration of tile coordinate obfuscation technique.
 
 ## Description
 
-This project protects tile-based map layers from unauthorized copying. Before sending a tile request to the server, the client transforms the tile coordinates. The server applies the reverse transformation and returns the real data. As a result, an attacker inspecting browser requests (F12 → Network) cannot reconstruct the original map coverage.
+This project demonstrates a basic coordinate scrambling mechanism for tile-based maps. Before sending a tile request to the server, the client transforms the tile coordinates by adding constant offsets. The server applies the reverse transformation and returns the real data.
+
+**Note**: This is a simple obfuscation technique for educational purposes. Since the offset values are exposed in client-side JavaScript, a determined user could still reverse-engineer the original coordinates. For production use, more sophisticated methods would be required.
 
 ## How It Works
 
@@ -78,30 +80,28 @@ http://localhost:3000
 4. Look at `tiles/z/x/y.png` requests - coordinates will be scrambled
 
 ### Request Example:
-- **URL in browser**: `/tiles/14/10326/6742.png` (scrambled)
-- **Real coordinate**: `(9326, 4742)` (on OpenStreetMap)
-- **Offset**: `+1000` for X, `+2000` for Y
+When you view the map at a certain location, the Network tab shows requests like:
+- **URL in browser**: `/tiles/14/10326/6742.png` (scrambled coordinates)
+- **Real coordinate**: `(9326, 4742)` (actual tile on OpenStreetMap)
+- **Offset applied**: `+1000` for X, `+2000` for Y
 
-## Console Logs
+This means an observer can only see the scrambled coordinates in the network requests, not the original tile positions.
 
-In the browser console, you can see the scrambling process:
+### Network Tab Screenshot Example:
 ```
-Client real: { z: 14, realX: 9326, realY: 4742 }
-Client fake: { z: 14, fakeX: 10326, fakeY: 6742 }
-```
-
-In the server terminal, you can see the unscrambling process:
-```
-Fake: { z: 14, fakeX: 10326, fakeY: 6742 }
-Real: { z: 14, realX: 9326, realY: 4742 }
+Request URL: http://localhost:3000/tiles/14/10326/6742.png
+Status: 200 OK
+Type: png
 ```
 
-## Security
+The scrambled coordinates (10326, 6742) hide the real tile location (9326, 4742).
 
-This method prevents:
-- Direct tile copying using visible coordinates
-- Automated map downloading by simple scripts
-- Map reconstruction by attackers through Network request analysis
+## Limitations
+
+- Client-side offsets are visible in JavaScript source code
+- A user with developer knowledge can inspect the code to find OFFSET_X and OFFSET_Y
+- This is a demonstration of the concept, not a production-ready security solution
+- For real protection, server-side session-based scrambling or encryption would be needed
 
 ## Author
 

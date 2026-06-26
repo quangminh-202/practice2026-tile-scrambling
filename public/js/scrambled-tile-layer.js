@@ -13,11 +13,6 @@ class ScrambledTileLayer extends L.TileLayer {
     const fakeX = realX + this.offsetX;
     const fakeY = realY + this.offsetY;
 
-    if (this.options.debug) {
-      console.log('Real coords:', { z, x: realX, y: realY });
-      console.log('Scrambled coords:', { z, x: fakeX, y: fakeY });
-    }
-
     return `/tiles/${z}/${fakeX}/${fakeY}.png`;
   }
 }
