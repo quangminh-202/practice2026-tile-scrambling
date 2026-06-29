@@ -16,3 +16,4 @@ class ScrambledTileLayer extends L.TileLayer {
     return `/tiles/${z}/${fakeX}/${fakeY}.png`;
   }
 }
+

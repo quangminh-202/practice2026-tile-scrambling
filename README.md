@@ -95,4 +95,4 @@ Breaking down the coordinates:
 - **Real X**: 9326 (original tile coordinate: 10326 - 1000)
 - **Real Y**: 4742 (original tile coordinate: 6742 - 2000)
 
-An observer monitoring network traffic will only see the scrambled coordinates (10326, 6742), not the real tile location (9326, 4742).
+An observer monitoring network traffic will only see the scrambled coordinates (10326, 6742), not the real tile location (9326, 4742)..

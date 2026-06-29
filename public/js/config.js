@@ -5,3 +5,4 @@ const CONFIG = {
   DEFAULT_ZOOM: 12,
   MAX_ZOOM: 19
 };
+
